@@ -1,0 +1,107 @@
+npx create-react-app admin-website
+cd admin-website
+npm start
+npm install react-router-dom @mui/material @mui/icons-material google-maps-react
+import React from 'react';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+
+const Header = () => {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Direct Campaign
+        </Typography>
+        <Button color="inherit" onClick={() => {}}>
+          Log Out
+        </Button>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Header;
+import React from 'react';
+import { List, ListItem, ListItemText, ListItemIcon, Typography } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { useState } from 'react';
+
+const Sidebar = () => {
+  const [teamOpen, setTeamOpen] = useState(false);
+  const [workOpen, setWorkOpen] = useState(false);
+
+  return (
+    <div>
+      <List>
+        <ListItem button>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+        <Typography variant="h6">Campaign View</Typography>
+        <ListItem button onClick={() => setTeamOpen(!teamOpen)}>
+          <ListItemText primary="Team" />
+          {teamOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        {teamOpen && (
+          <>
+            <ListItem button>
+              <ListItemIcon />
+              <ListItemText primary="Add Volunteers" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon />
+              <ListItemText primary="Manage Team" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon />
+              <ListItemText primary="Create Groups" />
+            </ListItem>
+          </>
+        )}
+        <ListItem button onClick={() => setWorkOpen(!workOpen)}>
+          <ListItemText primary="Assign Work" />
+          {workOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        {workOpen && (
+          <>
+            <ListItem button>
+              <ListItemIcon />
+              <ListItemText primary="Surveys" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon />
+              <ListItemText primary="Create Walkbook" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon />
+              <ListItemText primary="Manage Walkbooks" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon />
+              <ListItemText primary="Upload Data" />
+            </ListItem>
+          </>
+        )}
+        <ListItem button>
+          <ListItemText primary="Message Board" />
+        </ListItem>
+      </List>
+    </div>
+  );
+};
+
+export default Sidebar;
+import React from 'react';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+
+const containerStyle = {
+  width: '100%',
+  height: '400px',
+};
+
+const center = {
+  lat: -3.745,
+  lng: -38.523,
+};
+
+const Dashboard = () => {
+  const
