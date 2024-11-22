@@ -1,0 +1,63 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type Campaign @model {
+  id: ID!
+  name: String!
+  volunteers: [Volunteer] @hasMany
+  routes: [Route] @hasMany
+  tasks: [Task] @hasMany
+  doors: [Door] @hasMany
+}
+
+type Volunteer @model {
+  id: ID!
+  campaign: Campaign @belongsTo
+  isManager: Boolean!
+  routes: [Route] @hasMany
+}
+
+type Route @model {
+  id: ID!
+  volunteer: Volunteer @belongsTo
+  campaign: Campaign @belongsTo
+  name: String
+  assignments: [Assignment] @hasMany
+}
+
+type Assignment @model {
+  id: ID!
+  door: Door! @belongsTo
+  task: Task! @belongsTo
+  route: Route @belongsTo
+  index: Int!
+  completed: Boolean
+}
+
+type Door @model {
+  id: ID!
+  campaign: Campaign @belongsTo
+  address: String!
+  latitude: Float
+  longitude: Float
+  residents: [Resident] @hasMany
+  assignments: [Assignment] @hasMany
+}
+
+type Resident @model {
+  id: ID!
+  door: Door @belongsTo
+  name: String
+  gender: String
+  party: String
+  age: Int
+}
+
+type Task @model {
+  id: ID!
+  campaign: Campaign @belongsTo
+  form: String
+  assignments: [Assignment] @hasMany
+}
+
